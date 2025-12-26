@@ -88,11 +88,11 @@ export const JobCard: React.FC<JobCardProps> = memo(
         <View style={styles.footer}>
           <Text style={styles.jobId}>{job.id}</Text>
           <TouchableOpacity
-            style={[styles.button, showWithdraw && styles.buttonWithdraw]}
+            style={[styles.button, showWithdraw && styles.buttonApplied]}
             onPress={showWithdraw ? onWithdraw : onApply}
             activeOpacity={0.8}>
             <Text style={styles.buttonText}>
-              {showWithdraw ? t('common.withdraw') : t('common.apply')}
+              {showWithdraw ? t('common.applied') : t('common.apply')}
             </Text>
           </TouchableOpacity>
         </View>
@@ -245,6 +245,10 @@ const createStyles = (isDark: boolean) =>
       shadowOpacity: 0.3,
       shadowRadius: 4,
       elevation: 3,
+    },
+    buttonApplied: {
+      backgroundColor: isDark ? '#2d7a3d' : '#4caf50',
+      shadowColor: isDark ? '#2d7a3d' : '#4caf50',
     },
     buttonWithdraw: {
       backgroundColor: isDark ? '#ff5252' : '#f44336',

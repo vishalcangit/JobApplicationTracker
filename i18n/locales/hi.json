@@ -1,0 +1,38 @@
+{
+  "common": {
+    "apply": "आवेदन करें",
+    "applied": "आवेदन किया",
+    "withdraw": "वापस लें",
+    "undo": "पूर्ववत करें",
+    "reset": "फ़िल्टर रीसेट करें",
+    "filters": "फ़िल्टर",
+    "distance": "दूरी",
+    "km": "किमी",
+    "salary": "वेतन",
+    "company": "कंपनी",
+    "type": "प्रकार",
+    "min": "न्यूनतम",
+    "max": "अधिकतम",
+    "language": "भाषा",
+    "selectLanguage": "भाषा चुनें",
+    "applyFilters": "फ़िल्टर लागू करें",
+    "resultsAvailable": "{{count}} परिणाम उपलब्ध"
+  },
+  "dashboard": {
+    "title": "नौकरी डैशबोर्ड",
+    "empty": "कोई नौकरी नहीं मिली",
+    "emptyFiltered": "आपके फ़िल्टर से मेल खाने वाली कोई नौकरी नहीं"
+  },
+  "applied": {
+    "title": "आवेदन की गई नौकरियां",
+    "empty": "अभी तक कोई आवेदन नहीं",
+    "withdrawConfirm": "आवेदन वापस लें?"
+  },
+  "jobTypes": {
+    "Full-time": "पूर्णकालिक",
+    "Part-time": "अंशकालिक",
+    "Shift": "शिफ्ट",
+    "Contract": "अनुबंध"
+  }
+}
+

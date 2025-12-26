@@ -1,97 +1,197 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Job Application Tracker (Lite)
 
-# Getting Started
+A React Native mobile application for tracking job applications with advanced filtering, distance calculation, and persistent storage.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## Features
 
-## Step 1: Start Metro
+- **Jobs Dashboard**: Browse available jobs with company, title, type, salary, and distance information
+- **Live Filtering**: Filter jobs by company name, job type, salary range, and distance
+- **Distance Calculation**: Automatic calculation of straight-line distance from Jaipur center (26.9124, 75.7873)
+- **Applied Jobs Tracking**: Move jobs to an Applied Jobs list with persistent storage
+- **Undo/Withdraw**: Remove applications and return jobs to the dashboard
+- **Multilingual Support**: Internationalization (i18n) with English and Hindi translations
+- **Dark Mode Support**: Automatic theme switching based on system preferences
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## Setup
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+### Prerequisites
+
+- Node.js >= 20
+- React Native development environment set up
+- iOS: Xcode and CocoaPods
+- Android: Android Studio and JDK
+
+### Installation
+
+1. Install dependencies:
 
 ```sh
-# Using npm
+npm install
+```
+
+2. For iOS, install CocoaPods dependencies:
+
+```sh
+cd ios && bundle exec pod install && cd ..
+```
+
+### Running the App
+
+#### Start Metro Bundler
+
+```sh
 npm start
-
-# OR using Yarn
-yarn start
 ```
 
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
+#### Run on iOS
 
 ```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
-```
-
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
 npm run ios
-
-# OR using Yarn
-yarn ios
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+#### Run on Android
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+```sh
+npm run android
+```
 
-## Step 3: Modify your app
+## Architecture
 
-Now that you have successfully run the app, let's make changes!
+### Project Structure
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+```
+JobApplicationTracker/
+├── components/          # Reusable UI components
+│   ├── JobCard.tsx     # Job card display component
+│   ├── FilterBar.tsx   # Filter controls component
+│   ├── FilterChips.tsx # Multi-select chip component
+│   ├── Slider.tsx      # Slider input component
+│   └── TabBar.tsx      # Navigation tab bar
+├── screens/            # Screen components
+│   ├── JobsDashboard.tsx  # Main jobs listing screen
+│   └── AppliedJobs.tsx    # Applied jobs screen
+├── context/            # React Context for state management
+│   └── JobContext.tsx  # Jobs and filters state
+├── types/              # TypeScript type definitions
+│   └── index.ts
+├── utils/              # Utility functions
+│   ├── distance.ts     # Distance calculation (Haversine formula)
+│   ├── filters.ts      # Filtering logic
+│   └── storage.ts      # AsyncStorage persistence
+├── data/               # Static data
+│   └── jobs.ts         # Job data and initialization
+├── i18n/               # Internationalization
+│   ├── index.ts        # i18n configuration
+│   └── locales/        # Translation files
+│       ├── en.json     # English translations
+│       └── hi.json     # Hindi translations
+└── App.tsx             # Root component
+```
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+### Key Design Decisions
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+#### State Management
+- **React Context API**: Used for global state management (jobs, applied jobs, filters)
+- **useMemo/useCallback**: Extensive use for performance optimization
+- **AsyncStorage**: Persistent storage for applied jobs across app restarts
 
-## Congratulations! :tada:
+#### Distance Calculation
+- **Haversine Formula**: Used for accurate great-circle distance calculation between coordinates
+- **Reference Point**: Hardcoded to Jaipur center (26.9124, 75.7873)
+- **Pre-calculated**: Distances calculated during job initialization for performance
 
-You've successfully run and modified your React Native App. :partying_face:
+#### Filtering
+- **Live Updates**: Filters apply immediately as user interacts
+- **Combined Filters**: All filters work together (AND logic)
+- **Memoized Results**: Filtered job list is memoized to prevent unnecessary recalculations
 
-### Now what?
+#### Performance Optimizations
+- **FlatList**: Used for efficient rendering of long lists with virtualization
+- **React.memo**: Applied to components to prevent unnecessary re-renders
+- **Stable Keys**: Job IDs used as keys for stable list rendering
+- **Windowed Rendering**: Configured FlatList with optimized render parameters
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+#### Component Architecture
+- **Reusable Components**: JobCard, FilterChips, Slider are all reusable
+- **Props Interface**: Well-defined TypeScript interfaces for type safety
+- **Separation of Concerns**: Clear separation between presentation and logic
 
-# Troubleshooting
+#### Internationalization
+- **i18next**: Industry-standard i18n library
+- **Auto-detection**: Language detection based on device settings
+- **Fallback**: English as fallback language
+- **Extensible**: Easy to add more languages by adding translation files
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+## Trade-offs
 
-# Learn More
+### Dependencies
+- **@react-native-community/slider**: Added for better UX instead of custom button-based controls
+- **@react-native-async-storage/async-storage**: Standard React Native storage solution
+- **i18next/react-i18next**: Industry standard for internationalization
+- **react-native-localize**: For automatic language detection
 
-To learn more about React Native, take a look at the following resources:
+### Distance Calculation
+- **Straight-line distance**: Uses Haversine formula for great-circle distance, not driving distance
+- **Fixed reference point**: Hardcoded to Jaipur center - could be made configurable in future
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+### Filtering
+- **In-memory filtering**: All jobs loaded into memory - could be paginated for larger datasets
+- **Live filtering**: No debouncing - filters apply immediately (acceptable for small dataset)
+
+### Storage
+- **AsyncStorage**: Uses AsyncStorage which has size limits (10MB on iOS, varies on Android)
+- **IDs only**: Stores only applied job IDs, not full job data (efficient but requires job data to persist)
+
+## What I'd Do Next
+
+### Immediate Improvements
+1. **Debouncing**: Add debouncing to text input filters for better performance with larger datasets
+2. **Pagination**: Implement pagination or virtual scrolling for very large job lists
+3. **Error Handling**: Add error boundaries and better error handling for storage operations
+4. **Loading States**: Add loading indicators during initial data load and storage operations
+5. **Unit Tests**: Add comprehensive unit tests for utilities (distance calculation, filtering logic)
+
+### Feature Enhancements
+1. **Search**: Add full-text search across job titles and descriptions
+2. **Sorting**: Add sorting options (by salary, distance, company name)
+3. **Favorites**: Add ability to favorite jobs without applying
+4. **Job Details**: Detailed job view with full description
+5. **Location Picker**: Allow users to set custom reference location
+6. **Export/Import**: Export applied jobs list, import job data
+7. **Notifications**: Remind users about applied jobs or new matching jobs
+8. **Analytics**: Track job application metrics and trends
+
+### Technical Improvements
+1. **State Management**: Consider Redux or Zustand for more complex state if app grows
+2. **API Integration**: Replace static data with API calls
+3. **Offline Support**: Implement offline-first architecture with sync
+4. **Caching**: Add caching layer for job data and images
+5. **Performance Monitoring**: Add performance monitoring and crash reporting
+6. **Accessibility**: Enhance accessibility features (screen reader support, larger touch targets)
+7. **Testing**: Add E2E tests using Detox or Maestro
+
+### UX Improvements
+1. **Animations**: Add smooth transitions and animations
+2. **Pull to Refresh**: Add pull-to-refresh functionality
+3. **Empty States**: Enhance empty state designs with illustrations
+4. **Onboarding**: Add onboarding flow for first-time users
+5. **Settings**: Add settings screen for language selection, theme preference
+
+## Dependencies
+
+- **react**: 19.2.0
+- **react-native**: 0.83.1
+- **@react-native-async-storage/async-storage**: Persistent storage
+- **i18next**: 23.x - Internationalization framework
+- **react-i18next**: 14.x - React bindings for i18next
+- **react-native-localize**: 3.x - Device locale detection
+- **@react-native-community/slider**: Native slider component
+- **react-native-safe-area-context**: Safe area handling
+
+## License
+
+This project is private and proprietary.
+
+## Author
+
+Built with React Native and TypeScript, following best practices for maintainability and performance.

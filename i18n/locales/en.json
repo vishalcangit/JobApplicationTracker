@@ -1,0 +1,38 @@
+{
+  "common": {
+    "apply": "Apply",
+    "applied": "Applied",
+    "withdraw": "Withdraw",
+    "undo": "Undo",
+    "reset": "Reset Filters",
+    "filters": "Filters",
+    "distance": "Distance",
+    "km": "km",
+    "salary": "Salary",
+    "company": "Company",
+    "type": "Type",
+    "min": "Min",
+    "max": "Max",
+    "language": "Language",
+    "selectLanguage": "Select Language",
+    "applyFilters": "Apply Filters",
+    "resultsAvailable": "{{count}} results available"
+  },
+  "dashboard": {
+    "title": "Jobs",
+    "empty": "No jobs found",
+    "emptyFiltered": "No jobs match your filters"
+  },
+  "applied": {
+    "title": "Applied Jobs",
+    "empty": "No applied jobs yet",
+    "withdrawConfirm": "Withdraw application?"
+  },
+  "jobTypes": {
+    "Full-time": "Full-time",
+    "Part-time": "Part-time",
+    "Shift": "Shift",
+    "Contract": "Contract"
+  }
+}
+
